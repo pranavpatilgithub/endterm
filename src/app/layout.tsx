@@ -1,37 +1,34 @@
-import type { Metadata } from "next";
-import { Raleway } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
+// src/app/layout.tsx
 import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider"
+import { Navbar } from "@/components/Navbar"; // <-- Import the new Navbar
 
-export const raleway = Raleway({
-  variable: "--font-raleway",
-  subsets: ["latin"],
-  display: "swap",
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "ENDTERM",
-  description: "For your go to preparation.",
+  description: "Access PYQs, Notes, and contribute to the academic community",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${raleway.variable} antialiased`}
-      >
+      <body className={inter.className}>
         <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar /> 
+            {children}
+          </ThemeProvider>
       </body>
     </html>
   );
