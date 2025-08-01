@@ -125,7 +125,7 @@ export default function PYQsPage() {
                     <div className="lg:col-span-3">
                         <div className="mb-4">
                             <h2 className="text-xl font-semibold text-academic-dark">
-                                Subjects starting with "{selectedLetter}"
+                                Subjects starting with {selectedLetter}
                             </h2>
                             <Badge variant="secondary" className="mt-2">
                                 {filteredSubjects.length} subjects found
