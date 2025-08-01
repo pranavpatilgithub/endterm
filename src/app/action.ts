@@ -1,7 +1,7 @@
 // src/lib/actions.ts
 'use server'
 import { createClient } from "@/utils/supabase/client";
-import { Subject } from "@/lib/definitions/subject.schema"
+// import { Subject } from "@/lib/definitions/subject.schema"
 // import { type PostgrestError } from "@supabase/supabase-js";
 
 

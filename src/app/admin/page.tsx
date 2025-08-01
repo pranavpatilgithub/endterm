@@ -5,7 +5,7 @@ import SidebarLink from '@/components/admin/SidebarLink';
 import AddSubject from '@/components/admin/AddSubject';
 import AddPyqPapers from '@/components/admin/AddPyqPapers';
 
-export default function admin() {
+export default function Admin() {
     const [activeSection, setActiveSection] = useState('add-subject');
 
 
