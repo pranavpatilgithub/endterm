@@ -68,7 +68,8 @@ export default function PYQsPage() {
     ) || []
 
     return (
-        <div className="min-h-screen bg-academic-gray">
+        <div className="bg-academic-gray cursor-pointer">
+            
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 <div className="mb-8">
@@ -104,9 +105,9 @@ export default function PYQsPage() {
                                         <button
                                             key={letter}
                                             onClick={() => setSelectedLetter(letter)}
-                                            className={`p-1 text-center rounded-sm transition-colors ${selectedLetter === letter
+                                            className={`p-1 text-center rounded-sm transition-colors cursor-pointer ${selectedLetter === letter
                                                 ? 'bg-blue-600 text-white'
-                                                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                                                : 'bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-black dark:text-gray-200 hover:bg-gray-200'
                                                 }`}
                                         >
                                             {letter}
@@ -119,7 +120,7 @@ export default function PYQsPage() {
 
 
                     {/* Subjects List */}
-                    <div className="lg:col-span-3">
+                    <div className="lg:col-span-3 cursor-pointer">
                         <div className="mb-4">
                             <h2 className="text-xl font-semibold text-academic-dark">
                                 Subjects starting with {selectedLetter}

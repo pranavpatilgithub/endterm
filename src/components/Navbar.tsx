@@ -10,9 +10,9 @@ export function Navbar() {
   const pathname = usePathname(); // Get the current path
 
   return (
-    <nav className='flex items-center justify-between pt-4 pb-4 pl-10 pr-10'>
+    <nav className='flex items-center justify-between pt-4 pb-4 pl-10 pr-10 cursor-pointer'>
       <div className='flex items-center'>
-        <h2 className='text-xl font-bold'>ENDTERM</h2>
+        <Link href='/' className='text-xl font-bold'>ENDTERM</Link>
       </div>
       <div className='flex items-center gap-6'>
         <ModeToggle />
