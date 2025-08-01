@@ -4,7 +4,6 @@
 import { ModeToggle } from '@/components/ModeToggle';
 import { Github } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { usePathname } from 'next/navigation'; // Import the hook
 
 export function Navbar() {
@@ -19,7 +18,7 @@ export function Navbar() {
         <ModeToggle />
         <Link 
           href="/pyqs" 
-          className={pathname === '/pyqs' ? 'underline underline-offset-4' : ''}
+          className={pathname === '/pyqs' ? 'underline underline-offset-5' : ''}
         >
           PYQs
         </Link>

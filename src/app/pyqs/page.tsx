@@ -16,15 +16,54 @@ export default function PYQsPage() {
 
     // Mock data - will be replaced with actual data later
     const subjects = {
-        A: ['Algorithms', 'Applied Mathematics'],
-        B: ['Blockchain Technology'],
-        C: ['Computer Networks', 'Computer Graphics', 'Compiler Design', 'Cloud Computing', 'Computer Vision'],
-        D: ['Data Structures', 'Database Management Systems', 'Digital Electronics', 'Drone Technology'],
-        M: ['Microprocessor Architecture (Lab)', 'Machine Learning / Business Intelligence'],
+        A: [
+            'Algorithms',
+            'Applied Mathematics',
+            'Advance Instrumentation',
+            'Structural Health Monitoring and Audit',
+            'Artificial Intelligence',
+            'Advanced Driver Assistance Systems',
+            'Android App Development with Kotlin',
+            'Agile Project Management',
+        ],
+        B: [
+            'Blockchain Technology',
+            'Bio-Inspired Systems and Computing ',
+            'Business Intelligence',
+        ],
+        C: [
+            'Computer Networks',
+            'Computer Graphics',
+            'Compiler Design',
+            'Cloud Computing',
+            'Computer Vision',
+        ],
+        D: [
+            'Data Structures',
+            'Database Management Systems',
+            'Digital Electronics',
+            'Drone Technology',
+            'Software Testing & Quality Assurance',
+        ],
+        E: ['E waste Management'],
+        I: ['Industrial Engineering'],
+        L: ['Lean Six Sigma'],
+        M: [
+            'Microprocessor Architecture (Lab)',
+            'Machine Learning / Business Intelligence',
+            'Major Project',
+            'MOOC Course',
+        ],
         N: ['Natural Language Processing', 'Network & Application Security'],
+        P: [
+            'Project Management & Governance',
+            'Professional Ethics',
+            'Project Based Learning - V',
+        ],
+        S: ['Sensors and Automation with IoT', 'Software Testing & Quality Assurance Laboratory'],
         V: ['Virtual Reality / Augmented Reality'],
-        
     };
+
 
 
     const filteredSubjects = subjects[selectedLetter as keyof typeof subjects]?.filter(subject =>
@@ -36,7 +75,7 @@ export default function PYQsPage() {
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-2xl font-bold text-academic-dark flex items-center">
+                    <h1 className="text-xl font-normal text-academic-dark flex items-center">
                         <BookOpen className="mr-3 h-5 w-5 text-academic-blue" />
                         Previous Year Questions
                     </h1>
@@ -45,7 +84,7 @@ export default function PYQsPage() {
                 {/* Search */}
                 <div className="mb-6">
                     <div className="relative max-w-md">
-                        <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
                         <Input
                             placeholder="Search by course name or code ..."
                             value={searchTerm}
@@ -97,11 +136,10 @@ export default function PYQsPage() {
                             {filteredSubjects.length > 0 ? (
                                 filteredSubjects.map((subject, index) => (
                                     <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
-                                        <CardContent className="p-6">
-                                            <div className="flex items-center space-x-3">
-                                                <BookOpen className="h-6 w-6 text-academic-blue flex-shrink-0" />
+                                        <CardContent className="p-4">
+                                            <div className="flex items-center space-x-2">
                                                 <div>
-                                                    <h3 className="font-semibold text-academic-dark">{subject}</h3>
+                                                    <h3 className="font-medium text-academic-dark">{subject}</h3>
                                                     <p className="text-sm text-gray-500 mt-1">
                                                         Click to view available PYQs
                                                     </p>
