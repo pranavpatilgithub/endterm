@@ -10,11 +10,8 @@ export default function PYQsPage() {
     const [selectedLetter, setSelectedLetter] = useState('A')
     const [searchTerm, setSearchTerm] = useState('')
 
-    console.log('PYQs page rendered')
-
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
-    // Mock data - will be replaced with actual data later
     const subjects = {
         A: [
             'Algorithms',
