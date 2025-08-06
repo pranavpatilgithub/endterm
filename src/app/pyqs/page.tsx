@@ -1,167 +1,98 @@
 'use client'
 
-import { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { BookOpen, Search } from 'lucide-react'
+import { fetchSubjects } from '@/app/fetchers'
+import { Subject } from '@/lib/definitions/subject.schema'
 
-export default function PYQsPage() {
+const PYQsPage = () => {
+    const [subjectsMap, setSubjectsMap] = useState<Record<string, Subject[]>>({})
     const [selectedLetter, setSelectedLetter] = useState('A')
     const [searchTerm, setSearchTerm] = useState('')
 
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+    useEffect(() => {
+        const fetchData = async () => {
+            const subjects = await fetchSubjects()
+            const grouped: Record<string, Subject[]> = {}
 
-    const subjects = {
-        A: [
-            'Algorithms',
-            'Applied Mathematics',
-            'Advance Instrumentation',
-            'Structural Health Monitoring and Audit',
-            'Artificial Intelligence',
-            'Advanced Driver Assistance Systems',
-            'Android App Development with Kotlin',
-            'Agile Project Management',
-        ],
-        B: [
-            'Blockchain Technology',
-            'Bio-Inspired Systems and Computing ',
-            'Business Intelligence',
-        ],
-        C: [
-            'Computer Networks',
-            'Computer Graphics',
-            'Compiler Design',
-            'Cloud Computing',
-            'Computer Vision',
-        ],
-        D: [
-            'Data Structures',
-            'Database Management Systems',
-            'Digital Electronics',
-            'Drone Technology',
-            'Software Testing & Quality Assurance',
-        ],
-        E: ['E waste Management'],
-        I: ['Industrial Engineering'],
-        L: ['Lean Six Sigma'],
-        M: [
-            'Microprocessor Architecture (Lab)',
-            'Machine Learning / Business Intelligence',
-            'Major Project',
-            'MOOC Course',
-        ],
-        N: ['Natural Language Processing', 'Network & Application Security'],
-        P: [
-            'Project Management & Governance',
-            'Professional Ethics',
-            'Project Based Learning - V',
-        ],
-        S: ['Sensors and Automation with IoT', 'Software Testing & Quality Assurance Laboratory'],
-        V: ['Virtual Reality / Augmented Reality'],
-    };
+            for (const subject of subjects) {
+                const letter = subject.starts_with_letter.toUpperCase()
+                if (!grouped[letter]) grouped[letter] = []
+                grouped[letter].push(subject)
+            }
 
+            setSubjectsMap(grouped)
+        }
 
+        fetchData()
+    }, [])
 
-    const filteredSubjects = subjects[selectedLetter as keyof typeof subjects]?.filter(subject =>
-        subject.toLowerCase().includes(searchTerm.toLowerCase())
-    ) || []
+    const filteredSubjects =
+        subjectsMap[selectedLetter]?.filter((subject) =>
+            subject.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            subject.code?.toLowerCase().includes(searchTerm.toLowerCase())
+        ) || []
+
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
     return (
-        <div className="bg-academic-gray cursor-pointer">
-            
-            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
-                {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-xl font-normal text-academic-dark flex items-center">
-                        <BookOpen className="mr-3 h-5 w-5 text-academic-blue" />
-                        Previous Year Questions
-                    </h1>
+        <main className="p-9 w-full">
+            <h1 className="text-2xl font-medium mb-4">Find Your Papers</h1>
+
+            <div className='flex flex-row w-full gap-6 justify-between'>
+                
+                <div className="grid grid-cols-4 gap-3 mb-6 bg-gray-900 p-5 rounded-2xl w-1/5">
+                    {letters.map((letter) => (
+                        <button
+                            key={letter}
+                            className={`w-full px-3 py-2 rounded-md text-center transition ${letter === selectedLetter
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-black dark:text-gray-200 hover:bg-gray-200'
+                                }`}
+                            onClick={() => setSelectedLetter(letter)}
+                        >
+                            {letter}
+                        </button>
+                    ))}
                 </div>
 
-                {/* Search */}
-                <div className="mb-6">
-                    <div className="relative max-w-md">
-                        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                        <Input
-                            placeholder="Search by course name or code ..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pl-10"
-                        />
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    {/* Alphabet Filter */}
-                    <div className="lg:col-span-1">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-lg">Filter by Subject</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-4 gap-2">
-                                    {alphabet.map(letter => (
-                                        <button
-                                            key={letter}
-                                            onClick={() => setSelectedLetter(letter)}
-                                            className={`p-1 text-center rounded-sm transition-colors cursor-pointer ${selectedLetter === letter
-                                                ? 'bg-blue-600 text-white'
-                                                : 'bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-black dark:text-gray-200 hover:bg-gray-200'
-                                                }`}
-                                        >
-                                            {letter}
-                                        </button>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
+                <div className='flex items-start flex-col w-4/5'>
+                    <Input
+                        
+                        placeholder="Search subjects..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="mb-6 h-12"
+                    />
 
 
-                    {/* Subjects List */}
-                    <div className="lg:col-span-3 cursor-pointer">
-                        <div className="mb-4">
-                            <h2 className="text-xl font-semibold text-academic-dark">
-                                Subjects starting with {selectedLetter}
-                            </h2>
-                            <Badge variant="secondary" className="mt-2">
-                                {filteredSubjects.length} subjects found
-                            </Badge>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                            {filteredSubjects.length > 0 ? (
-                                filteredSubjects.map((subject, index) => (
-                                    <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
-                                        <CardContent className="p-4">
-                                            <div className="flex items-center space-x-2">
-                                                <div>
-                                                    <h3 className="font-medium text-academic-dark">{subject}</h3>
-                                                    <p className="text-sm text-gray-500 mt-1">
-                                                        Click to view available PYQs
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                ))
-                            ) : (
-                                <div className="col-span-full text-center py-12">
-                                    <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                                    <h3 className="text-lg font-medium text-gray-900 mb-2">No subjects found</h3>
-                                    <p className="text-gray-500">
-                                        {searchTerm
-                                            ? `No subjects matching "${searchTerm}" for letter "${selectedLetter}"`
-                                            : `No subjects available for letter "${selectedLetter}"`
-                                        }
+                    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+                        {filteredSubjects.length > 0 ? (
+                            filteredSubjects.map((subject) => (
+                                <Link
+                                    href={`/pyqs/${subject.code}`}
+                                    key={subject.code}
+                                    className="p-4 rounded border hover:shadow transition"
+                                >
+                                    <h3 className="font-medium text-academic-dark">{subject.name}</h3>
+                                    <p className="text-sm text-gray-500 mt-1">
+                                        {subject.code ?? 'Click to view available PYQs'}
                                     </p>
-                                </div>
-                            )}
-                        </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <p className="text-gray-500 col-span-full">No subjects found.</p>
+                        )}
                     </div>
+
                 </div>
+
             </div>
-        </div>
+
+
+        </main>
     )
 }
+
+export default PYQsPage

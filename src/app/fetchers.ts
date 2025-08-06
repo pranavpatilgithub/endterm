@@ -8,7 +8,7 @@ export async function fetchSubjects(): Promise<Subject[]> {
   const { data, error } = await supabase
     .from('subjects')
     .select('*')
-    .order('starts_with', { ascending: true })
+    .order('starts_with_letter', { ascending: true })
     .order('name', { ascending: true })
 
   if (error) {
@@ -17,4 +17,20 @@ export async function fetchSubjects(): Promise<Subject[]> {
   }
 
   return data as Subject[]
+}
+
+export async function fetchSubjectByCode(code: string): Promise<Subject | null> {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from('subjects')
+    .select('*')
+    .eq('code', code)
+    .single();
+
+  if (error) {
+    console.error('Error fetching subject by code:', error.message);
+    return null;
+  }
+
+  return data as Subject;
 }

@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/client";
 // import { type PostgrestError } from "@supabase/supabase-js";
 
 
-export async function addSubject(data: { name: string; code: string, starts_with: string }) {
+export async function addSubject(data: { name: string; code: string, starts_with_letter: string, has_pyqs: boolean, has_notes: boolean }) {
   const supabase = createClient();
 
   const { error } = await supabase.from('subjects').insert([data])
