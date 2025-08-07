@@ -41,7 +41,7 @@ const PYQsPage = () => {
             <h1 className="text-2xl font-medium mb-4">Find Your Papers</h1>
 
             <div className='flex flex-row w-full gap-6 justify-between'>
-                
+
                 <div className="grid grid-cols-4 gap-3 mb-6 bg-gray-900 p-5 rounded-2xl w-1/5">
                     {letters.map((letter) => (
                         <button
@@ -59,7 +59,7 @@ const PYQsPage = () => {
 
                 <div className='flex items-start flex-col w-4/5'>
                     <Input
-                        
+
                         placeholder="Search subjects..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -73,24 +73,29 @@ const PYQsPage = () => {
                                 <Link
                                     href={`/pyqs/${subject.code}`}
                                     key={subject.code}
-                                    className="p-4 rounded border hover:shadow transition"
+                                    className="p-2 rounded border hover:shadow transition"
                                 >
                                     <h3 className="font-medium text-academic-dark">{subject.name}</h3>
-                                    <p className="text-sm text-gray-500 mt-1">
-                                        {subject.code ?? 'Click to view available PYQs'}
-                                    </p>
+                                    <div className="flex flex-row justify-between items-center mt-2">
+                                        <p className="text-sm text-gray-500">
+                                            {subject.code ?? 'Click to view available PYQs'}
+                                        </p>
+                                        <p
+                                            className={`text-xs font-medium ${subject.has_pyqs ? 'text-green-500' : 'text-red-400'
+                                                }`}
+                                        >
+                                            {subject.has_pyqs ? 'PYQs Available' : 'PYQs Not Available'}
+                                        </p>
+                                    </div>
+
                                 </Link>
                             ))
                         ) : (
                             <p className="text-gray-500 col-span-full">No subjects found.</p>
                         )}
                     </div>
-
                 </div>
-
             </div>
-
-
         </main>
     )
 }
