@@ -57,8 +57,9 @@ const AddPyqPapers: React.FC<AddPyqPapersProps> = ({ active }) => {
         const pdfs = await listPyqPdfs(selectedCode);
         console.log(`Fetched PDFs for ${selectedCode}:`, pdfs);
         setPdfList(pdfs);
-      } catch (err: any) {
-        toast.error(`Failed to load PDFs: ${err.message}`);
+      } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
+        toast.error(`Failed to load PDFs: ${errorMessage}`);
       }
     };
     fetchPdfs();
@@ -80,8 +81,9 @@ const AddPyqPapers: React.FC<AddPyqPapersProps> = ({ active }) => {
       setSearchTerm('');
       await loadSubjects();
       setPdfList([]); // Reset list until next subject is selected
-    } catch (err: any) {
-      toast.error(`Upload failed: ${err.message}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
+      toast.error(`Upload failed: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -159,8 +161,9 @@ const AddPyqPapers: React.FC<AddPyqPapersProps> = ({ active }) => {
                         toast.success(`${pdf} deleted.`);
                         setPdfList((prev) => prev.filter((p) => p !== pdf));
                         await loadSubjects();
-                      } catch (err: any) {
-                        toast.error(`Failed to delete: ${err.message}`);
+                      } catch (err: unknown) {
+                        const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
+                        toast.error(`Failed to delete: ${errorMessage}`);
                       } finally {
                         setLoading(false);
                       }
