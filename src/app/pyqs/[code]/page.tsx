@@ -1,5 +1,3 @@
-// app/pyqs/[code]/page.tsx
-
 import { fetchSubjectByCode } from "@/app/fetchers";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -12,10 +10,11 @@ interface PdfFile {
 }
 
 interface Props {
-  params: { code: string };
+  params: Promise<{ code: string }>;
 }
 
-const SubjectPage = async ({ params }: Props) => {
+const SubjectPage = async (props: Props) => {
+  const params = await props.params;
   const code = await params.code;
   const subject = await fetchSubjectByCode(code);
   if (!subject) return notFound();
