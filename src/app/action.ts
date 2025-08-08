@@ -1,4 +1,3 @@
-// src/lib/actions.ts
 'use server'
 import { createClient } from "@/utils/supabase/client";
 // import { Subject } from "@/lib/definitions/subject.schema"
@@ -58,4 +57,31 @@ export async function deleteSinglePdf(code: string, fileName: string) {
   const { error } = await supabase.storage.from("pyqs").remove([filePath]);
 
   if (error) throw new Error(error.message);
+}
+
+export async function listPyqPdfsWithSignedUrls(code: string) {
+
+  const supabase = createClient();
+  const { data: files, error } = await supabase.storage
+    .from("pyqs")
+    .list(code, { limit: 100 }); // lists folder contents
+
+  if (error) throw error;
+
+  const pdfs = [];
+
+  for (const file of files) {
+    const { data, error: signedError } = await supabase.storage
+      .from("pyqs")
+      .createSignedUrl(`${code}/${file.name}`, 200); // 200 sec expiry
+
+    if (!signedError && data?.signedUrl) {
+      pdfs.push({
+        name: file.name,
+        url: data.signedUrl,
+      });
+    }
+  }
+
+  return pdfs;
 }
