@@ -22,7 +22,7 @@ import { fetchSubjects } from '@/app/fetchers';
 
 interface SubjectDropdownProps {
     value?: string;
-    onChange: (subject: Subject) => void;
+    onChange: (subject: Subject |null) => void;
     placeholder?: string;
 }
 
@@ -55,7 +55,7 @@ export function SubjectDropdown({
 
     const handleClear = () => {
         setSelectedSubject(null);
-        onChange(null as any);
+        onChange(null);
         setOpen(false);
     };
 
