@@ -7,8 +7,14 @@ import SubjectPdfList from "@/app/pyqs/[code]/SubjectPdfList"; // Client compone
 
 export const dynamic = "force-dynamic";
 
-export default async function SubjectPage({ params }: { params: { code: string } }) {
-  const code = params.code;
+interface PageProps {
+  params: {
+    code: string;
+  };
+}
+
+export default async function SubjectPage({ params }: PageProps) {
+  const { code } = params;
 
   const subject = await fetchSubjectByCode(code);
   if (!subject) return notFound();
