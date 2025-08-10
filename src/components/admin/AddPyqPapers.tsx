@@ -73,7 +73,7 @@ const AddPyqPapers: React.FC<AddPyqPapersProps> = ({ active }) => {
           />
 
           {/* File input */}
-          <label className="flex w-full cursor-pointer flex-col items-center rounded-lg border border-dashed border-gray-400 bg-gray-50 px-4 py-6 text-center text-gray-600 transition hover:border-blue-500 hover:bg-blue-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-blue-400 dark:hover:bg-gray-700">
+          <label className="flex w-full cursor-pointer flex-col items-center rounded-lg border border-dashed border-gray-400 bg-gray-50 px-4 py-6 text-center text-gray-600 transition hover:border-blue-500 hover:bg-blue-50 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-blue-400 dark:hover:bg-gray-800">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 mb-2 text-gray-400 dark:text-gray-500"

@@ -3,7 +3,7 @@ import { fetchSubjectByCode } from "@/app/fetchers";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { listPyqPdfsWithSignedUrls } from "@/app/action";
-import SubjectPdfList from "@/app/pyqs/[code]/SubjectPdfList"; // Client component
+import SubjectPdfList from "@/app/pyqs/[code]/SubjectPdfList";
 
 export const dynamic = "force-dynamic";
 
@@ -23,18 +23,33 @@ export default async function SubjectPage(props: PageProps) {
   const pdfs = await listPyqPdfsWithSignedUrls(code);
 
   return (
-    <div className="p-9">
+    <main className="p-8">
+      {/* Back Link */}
       <Link
         href="/pyqs"
-        className="inline-block mb-4 px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white"
+        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
       >
-        ← Back
+        ← Back to Subjects
       </Link>
 
-      <h1 className="text-2xl font-bold mb-4">{subject.name}</h1>
-      <p className="text-gray-600 mb-6">Subject Code: {subject.code}</p>
+      {/* Subject Info */}
+      <header className="mt-4 mb-8">
+        <h1 className="text-3xl font-bold">{subject.name}</h1>
+        <p className="text-muted-foreground mt-1">
+          Subject Code: <span className="font-medium">{subject.code}</span>
+        </p>
+      </header>
 
-      <SubjectPdfList pdfs={pdfs} />
-    </div>
+      {/* PDF List */}
+      <section>
+        {pdfs.length > 0 ? (
+          <SubjectPdfList pdfs={pdfs} />
+        ) : (
+          <div className="p-6 rounded-lg border border-border bg-muted/20 text-center text-muted-foreground">
+            No PYQs uploaded for this subject yet.
+          </div>
+        )}
+      </section>
+    </main>
   );
 }
